@@ -29,7 +29,7 @@ button { color: inherit; cursor: pointer; }
 img { display: block; width: 100%; object-fit: cover; }
 .arrow-icon { display: inline-block; flex-shrink: 0; height: 1.15em; vertical-align: -.15em; width: 1.15em; }
 
-.site-header { align-items: center; backdrop-filter: blur(14px); background: rgba(23, 25, 22, .95); border-bottom: 1px solid var(--line); display: flex; height: 76px; justify-content: space-between; padding: 0 4vw; position: sticky; top: 0; z-index: 10; }
+.site-header { align-items: center; backdrop-filter: blur(14px); background: radial-gradient(ellipse at 38% 0%, rgba(39, 155, 80, .24), transparent 48%), radial-gradient(ellipse at 90% 100%, rgba(189, 48, 43, .18), transparent 42%), linear-gradient(110deg, #141614 0%, #102b25 55%, #221a1c 100%); border-bottom: 1px solid rgba(230, 196, 95, .3); box-shadow: 0 6px 24px rgba(0, 0, 0, .18); display: flex; height: 76px; justify-content: space-between; padding: 0 4vw; position: sticky; top: 0; z-index: 10; }
 .utility-strip { align-items: center; background: #a82b25; color: #fff; display: flex; font-family: var(--mono); font-size: 9px; justify-content: space-between; letter-spacing: .08em; min-height: 30px; padding: 0 4vw; text-transform: uppercase; }
 .utility-strip a { color: #e9d38b; }
 .brand { align-items: center; display: flex; gap: 9px; font-size: 19px; font-weight: 700; letter-spacing: .18em; }
