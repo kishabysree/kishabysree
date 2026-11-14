@@ -27,13 +27,14 @@ function Header({ active, bagCount }) {
   return <>
   <div className="utility-strip"><span>Handwoven in Kerala</span><span>Free delivery across India on orders over ₹5,000</span><a href={instagramUrl} target="_blank" rel="noreferrer">@kishabysree <ArrowIcon /></a></div>
   <header className="site-header">
-    <button className="menu-toggle" aria-label="Open menu" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
-      <a className="brand" href="#/" aria-label="KishabySree home">
-        <img className="brand-logo" src={kishabySreeLogoUrl} alt="KishabySree logo" referrerPolicy="no-referrer" />
+    <a className="brand" href="#/" aria-label="KishabySree home">
+      <img className="brand-logo" src={kishabySreeLogoUrl} alt="KishabySree logo" referrerPolicy="no-referrer" />
+      <span className="brand-copy">
         <span className="brand-name">KISHABYSREE</span>
         <span className="brand-sub">കേരളം · KERALA</span>
-      </a>
-    <nav className={`main-nav ${menuOpen ? 'open' : ''}`} aria-label="Main navigation">
+      </span>
+    </a>
+    <nav id="main-navigation" className={`main-nav ${menuOpen ? 'open' : ''}`} aria-label="Main navigation">
       <a className={active === 'shop' ? 'active' : ''} href="#/shop" onClick={() => setMenuOpen(false)}>Shop</a>
       <a className={active === 'about' ? 'active' : ''} href="#/about" onClick={() => setMenuOpen(false)}>About</a>
       <a className={active === 'journal' ? 'active' : ''} href="#/journal" onClick={() => setMenuOpen(false)}>Journal</a>
@@ -43,6 +44,11 @@ function Header({ active, bagCount }) {
       <a className="instagram-link" href={instagramUrl} target="_blank" rel="noreferrer">Instagram <ArrowIcon /></a>
       <a className={`bag-button ${active === 'bag' ? 'active' : ''}`} href="#/bag" aria-label="Shopping bag">Bag <span className="bag-count">{bagCount}</span></a>
     </div>
+    <button className="menu-toggle" type="button" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen(!menuOpen)}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+        {menuOpen ? <path d="M5 5l14 14M19 5 5 19" /> : <path d="M4 8h16M4 16h16" />}
+      </svg>
+    </button>
   </header></>;
 }
 

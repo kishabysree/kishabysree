@@ -29,25 +29,27 @@ button { color: inherit; cursor: pointer; }
 img { display: block; width: 100%; object-fit: cover; }
 .arrow-icon { display: inline-block; flex-shrink: 0; height: 1.15em; vertical-align: -.15em; width: 1.15em; }
 
-.site-header { align-items: center; backdrop-filter: blur(14px); background: radial-gradient(ellipse at 38% 0%, rgba(39, 155, 80, .24), transparent 48%), radial-gradient(ellipse at 90% 100%, rgba(189, 48, 43, .18), transparent 42%), linear-gradient(110deg, #141614 0%, #102b25 55%, #221a1c 100%); border-bottom: 1px solid rgba(230, 196, 95, .3); box-shadow: 0 6px 24px rgba(0, 0, 0, .18); display: flex; height: 76px; justify-content: space-between; padding: 0 4vw; position: sticky; top: 0; z-index: 10; }
+.site-header { align-items: center; background: linear-gradient(180deg, rgba(12, 21, 17, .97) 0%, rgba(12, 21, 17, .88) 50%, rgba(12, 21, 17, 0) 100%); display: flex; gap: clamp(20px, 3vw, 48px); height: 126px; padding: 0 4vw; position: sticky; top: 0; z-index: 10; }
 .utility-strip { align-items: center; background: #a82b25; color: #fff; display: flex; font-family: var(--mono); font-size: 9px; justify-content: space-between; letter-spacing: .08em; min-height: 30px; padding: 0 4vw; text-transform: uppercase; }
 .utility-strip a { color: #e9d38b; }
-.brand { align-items: center; display: flex; gap: 9px; font-size: 19px; font-weight: 700; letter-spacing: .18em; }
-.brand-logo { flex-shrink: 0; height: 58px; object-fit: contain; width: 58px; }
-.brand-sub { color: var(--blue); font-family: var(--malayalam); font-size: 9px; font-weight: 500; letter-spacing: .04em; }
-.main-nav { display: flex; gap: 30px; margin-left: 8%; }
-.main-nav a, .header-actions button { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; }
-.main-nav a { position: relative; }
+.brand { align-items: center; display: flex; flex-shrink: 0; gap: 12px; }
+.brand-logo { flex-shrink: 0; height: 68px; object-fit: contain; width: 68px; }
+.brand-copy { display: grid; gap: 3px; }
+.brand-name { font-size: 17px; font-weight: 700; letter-spacing: .14em; }
+.brand-sub { color: var(--blue); font-family: var(--malayalam); font-size: 9px; font-weight: 500; letter-spacing: .12em; }
+.main-nav { display: flex; gap: clamp(22px, 3vw, 48px); margin-left: auto; }
+.main-nav a, .header-actions button { font-size: 13px; font-weight: 600; }
+.main-nav a { color: #e2e0d9; position: relative; }
 .main-nav a::after { background: var(--kasavu); bottom: -5px; content: ''; height: 1px; left: 0; position: absolute; transform: scaleX(0); transform-origin: right; transition: transform .25s; width: 100%; }
 .main-nav a:hover::after, .main-nav a.active::after { transform: scaleX(1); transform-origin: left; }
-.header-actions { align-items: center; display: flex; gap: 19px; }
+.header-actions { align-items: center; display: flex; gap: 26px; }
 .header-actions button, .menu-toggle { background: none; border: 0; padding: 4px; }
 .header-actions a { color: inherit; }
-.instagram-link { border-bottom: 1px solid var(--theyyam); color: var(--theyyam); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; padding-bottom: 3px; text-transform: uppercase; }
-.menu-toggle { display: none; font-size: 22px; }
-.bag-button { align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; display: inline-flex; font-family: var(--mono); font-size: 10px; gap: 8px; letter-spacing: .08em; padding: 8px 12px; text-transform: uppercase; }
-.bag-button.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.bag-button.active .bag-count { background: var(--paper); color: var(--ink); }
+.instagram-link { font-size: 13px; font-weight: 600; }
+.menu-toggle { display: none; }
+.menu-toggle svg { height: 22px; width: 22px; }
+.bag-button { align-items: center; border-bottom: 1px solid var(--kasavu); display: inline-flex; font-size: 13px; font-weight: 700; gap: 9px; padding: 8px 0; }
+.bag-button.active { color: var(--kasavu); }
 .bag-count { background: var(--blue); border-radius: 50%; color: var(--paper); display: inline-grid; font-size: 9px; height: 16px; margin-left: 2px; place-items: center; width: 16px; }
 
 .page { animation: pageIn .55s ease both; }
@@ -297,10 +299,11 @@ img { display: block; width: 100%; object-fit: cover; }
 }
 
 @media (min-width: 701px) and (max-width: 1000px) {
-  .brand { font-size: 16px; letter-spacing: .13em; }
+  .site-header { gap: 20px; }
+  .brand-name { font-size: 14px; letter-spacing: .1em; }
   .brand-sub, .instagram-link { display: none; }
-  .main-nav { gap: 18px; margin-left: 0; }
-  .header-actions { gap: 12px; }
+  .main-nav { gap: 20px; }
+  .header-actions { gap: 16px; }
 }
 
 @media (max-width: 700px) {
@@ -310,14 +313,15 @@ img { display: block; width: 100%; object-fit: cover; }
   .little-sree-launcher-copy strong { font-size: 14px; }
   .little-sree-launcher-copy small { font-size: 9px; }
   .little-sree-panel { bottom: 76px; height: min(560px, calc(100dvh - 92px)); right: 14px; width: calc(100vw - 28px); }
-  .site-header { height: 65px; padding: 0 5vw; }
+  .site-header { gap: 12px; height: 100px; padding: 0 5vw; }
   .utility-strip { gap: 12px; justify-content: center; min-height: 28px; padding: 0 5vw; }
   .utility-strip span:nth-child(2) { display: none; }
-  .brand { font-size: 16px; gap: 6px; }
-  .brand-logo { height: 48px; width: 48px; }
+  .brand { gap: 8px; margin-right: auto; }
+  .brand-name { font-size: 14px; letter-spacing: .1em; }
+  .brand-logo { height: 52px; width: 52px; }
   .brand-sub { display: none; }
-  .menu-toggle { display: block; }
-  .main-nav { background: var(--paper); border-bottom: 1px solid var(--line); display: none; flex-direction: column; gap: 22px; left: 0; margin: 0; padding: 25px 5vw; position: absolute; top: 65px; width: 100%; }
+  .menu-toggle { align-items: center; border: 1px solid var(--line); border-radius: 50%; display: inline-flex; flex: 0 0 44px; height: 44px; justify-content: center; }
+  .main-nav { background: #14251e; border-bottom: 1px solid var(--line); display: none; flex-direction: column; gap: 22px; left: 0; margin: 0; padding: 25px 5vw; position: absolute; top: 100%; width: 100%; }
   .main-nav.open { display: flex; }
   .header-actions { gap: 8px; }
   .header-actions button:first-child { display: none; }
@@ -392,13 +396,14 @@ img { display: block; width: 100%; object-fit: cover; }
 }
 
 @media (max-width: 360px) {
-  .brand { font-size: 12px; letter-spacing: .07em; }
+  .brand-name { font-size: 12px; letter-spacing: .07em; }
   .brand-logo { height: 42px; width: 42px; }
   .header-actions { gap: 4px; }
-  .bag-button { gap: 5px; padding: 7px 9px; }
+  .bag-button { gap: 5px; }
 }
 
 @media (max-width: 280px) {
+  .brand-copy { display: none; }
   .little-sree-launcher-copy { width: 130px; }
 }
 
