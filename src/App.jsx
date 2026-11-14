@@ -2,7 +2,7 @@ import { createContext, lazy, Suspense, useContext, useEffect, useRef, useState 
 import ReactMarkdown from 'react-markdown';
 import { fetchProducts, localProducts } from './products';
 import { filterProducts, getCategories } from './catalogFilters';
-import { addBagItem, changeBagQuantity, removeBagItem } from './bag';
+import { addBagItem, changeBagQuantity, loadSessionBag, removeBagItem, saveSessionBag } from './bag';
 import { contactEmail } from './contact';
 
 const KathakaliMiniature = lazy(() => import('./KathakaliMiniature'));
@@ -270,7 +270,9 @@ function LittleSree({ bagCount, onAdd }) {
 }
 
 function App() {
-  const [bagItems, setBagItems] = useState([]);
+  const [initialBag] = useState(loadSessionBag);
+  const [bagItems, setBagItems] = useState(initialBag.items);
+  const [bagError, setBagError] = useState(initialBag.error);
   const [route, setRoute] = useState(window.location.hash);
   const [catalog, setCatalog] = useState(localProducts);
   const [catalogError, setCatalogError] = useState('');
@@ -281,6 +283,9 @@ function App() {
   }
 
   useEffect(() => { const updateRoute = () => setRoute(window.location.hash); window.addEventListener('hashchange', updateRoute); return () => window.removeEventListener('hashchange', updateRoute); }, []);
+  useEffect(() => {
+    if (!saveSessionBag(bagItems)) setBagError('Your bag could not be saved for this session.');
+  }, [bagItems]);
   useEffect(() => { window.scrollTo(0, 0); }, [route]);
   useEffect(() => {
     let active = true;
@@ -301,6 +306,7 @@ function App() {
   const product = catalog.find(item => item.id === parts[1]) || catalog[0];
   return <CatalogContext.Provider value={catalog}>
     {catalogError && <div className="catalog-error" role="alert">{catalogError}</div>}
+    {bagError && <div className="catalog-error" role="alert">{bagError}</div>}
     {parts[0] === 'about' && <About bagCount={bagCount} />}
     {parts[0] === 'journal' && <Journal bagCount={bagCount} />}
     {parts[0] === 'shop' && <Shop bagCount={bagCount} initialGarment={initialGarment} />}

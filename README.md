@@ -2,7 +2,7 @@
 
 ## Shopping bag
 
-The bag groups items by product and selected length, where available. Use the quantity controls to add or remove individual pieces; decreasing the quantity to zero removes that entry. The bag is cleared when the page is refreshed or closed.
+The bag groups items by product and selected length, where available. Use the quantity controls to add or remove individual pieces; decreasing the quantity to zero removes that entry. The bag survives refreshes using session storage and is cleared when the browser tab's session ends.
 
 ## Little Sree
 
