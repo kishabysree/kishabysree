@@ -63,30 +63,113 @@ function ProductCard({ product }) {
   </a>;
 }
 
+const heroVideo = '/hero/kishabysree.mp4';
+
+function HeroVideo() {
+  const [motionAllowed, setMotionAllowed] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setMotionAllowed(!preference.matches);
+    update();
+    preference.addEventListener('change', update);
+    return () => preference.removeEventListener('change', update);
+  }, []);
+
+  return <div className="hero-media" aria-hidden="true">
+    <img className="hero-video-poster" src="/hero/kishabysree.jpg" alt="" />
+    {motionAllowed && !failed && <video
+      className="hero-video"
+      src={heroVideo}
+      autoPlay
+      loop
+      muted
+      playsInline
+      aria-hidden="true"
+      onError={() => {
+        console.warn('Unable to load hero video:', heroVideo);
+        setFailed(true);
+      }}
+    />}
+  </div>;
+}
+
 function Home({ bagCount }) {
   const products = useContext(CatalogContext);
   const garments = getCategories(products, 'collective-category');
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const bounds = hero.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, -bounds.top / bounds.height));
+      hero.style.setProperty('--hero-rise', `${-Math.round(progress * 70)}px`);
+      hero.style.setProperty('--hero-fall', `${Math.round(progress * 48)}px`);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    const configure = () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      if (reducedMotion.matches) {
+        hero.style.removeProperty('--hero-rise');
+        hero.style.removeProperty('--hero-fall');
+      } else {
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        schedule();
+      }
+    };
+    configure();
+    reducedMotion.addEventListener('change', configure);
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      reducedMotion.removeEventListener('change', configure);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return <Page active="home" bagCount={bagCount}><main>
-    <section className="hero">
-      <div className="hero-media" aria-hidden="true"><img src={heroImage} alt="" /></div>
-      <div className="hero-content">
-        <div className="hero-topline"><span>KishabySree / The collection</span><span>Kochi, Kerala</span></div>
+    <section className="hero" ref={heroRef}>
+      <HeroVideo />
+      <div className="hero-inner">
         <div className="hero-copy">
-          <p className="hero-kicker"><span aria-hidden="true" /> A little tradition. A little today.</p>
-          <h1>Clothes<br /><em>that feel</em><br />like you.</h1>
-          <p className="hero-description">Thoughtful pieces for every version of you. Inspired by our roots, made for your everyday.</p>
+          <p className="hero-kicker"><span aria-hidden="true">✦</span> A little tradition. A little today.</p>
+          <h1>Wear a little <em>joy.</em></h1>
+          <p className="hero-description">Thoughtful clothes for everyday adventures, happy moments and everything in between.</p>
           <div className="hero-actions"><a className="primary-cta" href="#/shop">Explore the collection <ArrowIcon /></a><a className="secondary-cta" href="#/about">Discover our story <ArrowIcon /></a></div>
           <a className="hero-social" href={instagramUrl} target="_blank" rel="noreferrer"><span>Follow us on Instagram</span><strong>@kishabysree <ArrowIcon /></strong></a>
         </div>
-        <div className="hero-bottomline"><span>Crafted with a point of view</span><span>Scroll to discover <ArrowIcon direction="down" /></span></div>
+        <div className="hero-art" aria-hidden="true">
+          <div className="hero-orbit" aria-hidden="true" />
+          <div className="hero-stamp-scroll" aria-hidden="true"><div className="hero-stamp"><span>MADE FOR</span><strong>your<br />everyday</strong><span>✦ WITH LOVE ✦</span></div></div>
+          <div className="hero-heart-scroll" aria-hidden="true"><svg className="hero-heart" viewBox="0 0 64 64" fill="none"><path d="M32 54C23 47 8 38 8 24 8 12 23 8 32 21 41 8 56 12 56 24c0 14-15 23-24 30Z" fill="currentColor" /></svg></div>
+          <span className="hero-sparkle hero-sparkle-one" aria-hidden="true">✦</span>
+          <span className="hero-sparkle hero-sparkle-two" aria-hidden="true">✳</span>
+          <span className="hero-photo-note" aria-hidden="true">a little joy, every day</span>
+        </div>
       </div>
+      <div className="hero-bottomline"><span>Kochi, Kerala · Made with care</span><span>Scroll to discover <ArrowIcon direction="down" /></span></div>
     </section>
     {garments.length > 0 && <section className="category-rail"><span className="eyebrow">Shop by garment</span>{garments.map(category => {
       const count = filterProducts(products, category, '').length;
       return <a key={category} href={`#/shop?garment=${encodeURIComponent(category)}`}>{category}<span>{count} {count === 1 ? 'piece' : 'pieces'}</span> <ArrowIcon /></a>;
     })}</section>}
-    <section className="section home-arrivals"><div className="section-head"><h2>New arrivals</h2><a className="text-link" href="#/shop">View all pieces <ArrowIcon /></a></div><div className="product-grid">{products.map(product => <ProductCard key={product.id} product={product} />)}</div></section>
-    <section className="statement-band"><span className="eyebrow">Our philosophy · നമ്മുടെ വഴി</span><h2>Less noise.<br />More <em>presence.</em></h2><p className="band-copy">A wardrobe that supports the life you are already living. Natural cloth, considered colour, and the ease of a familiar ritual.</p><div className="band-footer"><span>01 — 03</span><span>Kathakali / കഥകളി <ArrowIcon direction="down-right" /></span></div></section>
+    <section className="section home-arrivals">
+      <div className="falling-petals" aria-hidden="true">{Array.from({ length: 24 }, (_, index) => <span key={index} style={{ '--petal-left': `${2 + (index * 37) % 96}%`, '--petal-delay': `-${(index * 7) % 23}s`, '--petal-duration': `${18 + (index % 5) * 2}s`, '--petal-size': `${12 + (index % 4) * 3}px` }} />)}</div>
+      <div className="section-head"><h2>New arrivals</h2><a className="text-link" href="#/shop">View all pieces <ArrowIcon /></a></div>
+      <div className="product-grid">{products.map(product => <ProductCard key={product.id} product={product} />)}</div>
+    </section>
+    <section className="statement-band"><span className="eyebrow">Our philosophy · നമ്മുടെ വഴി</span><h2>Less noise.<br />More <em>presence.</em></h2><p className="band-copy">A wardrobe that supports the life you are already living. Natural cloth, considered colour, and the ease of a familiar ritual.</p><div className="band-footer"><span>01 — 03</span></div></section>
     <section className="instagram-feature">
       <div className="instagram-feature-copy">
         <span className="eyebrow">Find us on Instagram</span>
