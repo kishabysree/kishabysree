@@ -18,3 +18,16 @@ test('filters combine garment and occasion, without hiding older products by def
   assert.deepEqual(filterProducts(products, 'Kurta/Kurti', 'Casual Wear').map(product => product.id), ['kurti']);
   assert.deepEqual(filterProducts(products, 'Saree', 'Casual Wear'), []);
 });
+
+test('search combines case-insensitive terms across product details and filters', () => {
+  const catalog = [
+    { id: 'one', name: 'Kasavu Saree', color: 'Ivory', composition: 'Handloom cotton', 'collective-category': 'Saree', 'product-category': 'Traditional' },
+    { id: 'two', name: 'Cotton Kurti', color: 'Blue', 'collective-category': 'Kurti', 'product-category': 'Casual' },
+    { id: 'old' }
+  ];
+  assert.deepEqual(filterProducts(catalog, '', '', '  COTTON   ivory ').map(product => product.id), ['one']);
+  assert.deepEqual(filterProducts(catalog, 'Kurti', '', 'cotton').map(product => product.id), ['two']);
+  assert.deepEqual(filterProducts(catalog, '', 'Casual', 'ivory'), []);
+  assert.deepEqual(filterProducts(catalog, '', '', '  ').map(product => product.id), ['one', 'two', 'old']);
+  assert.deepEqual(filterProducts(catalog, '', '', 'missing'), []);
+});

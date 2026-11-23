@@ -11,7 +11,12 @@ const instagramUrl = 'https://www.instagram.com/kishabysree/';
 const kishabySreeLogoUrl = '/kishabySree-logo.png';
 const heroImage = 'https://images.pexels.com/photos/36962415/pexels-photo-36962415.jpeg?auto=compress&cs=tinysrgb&w=1600';
 const CatalogContext = createContext(localProducts);
+const SearchContext = createContext(null);
 const sareeLengths = ['Free', '5.5m', '6m'];
+
+function SearchIcon() {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 4 4" /></svg>;
+}
 
 function ArrowIcon({ direction = 'up-right' }) {
   const paths = {
@@ -24,6 +29,16 @@ function ArrowIcon({ direction = 'up-right' }) {
 
 function Header({ active, bagCount }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { search, setSearch } = useContext(SearchContext);
+
+  function submitSearch(event) {
+    event.preventDefault();
+    const query = search.trim();
+    setSearch(query);
+    setMenuOpen(false);
+    window.location.hash = query ? `#/shop?search=${encodeURIComponent(query)}` : '#/shop';
+  }
+
   return <>
   <div className="utility-strip"><span>Handwoven in Kerala</span><span>Free delivery across India on orders over ₹5,000</span><a href={instagramUrl} target="_blank" rel="noreferrer">@kishabysree <ArrowIcon /></a></div>
   <header className="site-header">
@@ -40,7 +55,6 @@ function Header({ active, bagCount }) {
       <a className={active === 'journal' ? 'active' : ''} href="#/journal" onClick={() => setMenuOpen(false)}>Journal</a>
     </nav>
     <div className="header-actions">
-      <button aria-label="Search">Search</button>
       <a className="instagram-link" href={instagramUrl} target="_blank" rel="noreferrer">Instagram <ArrowIcon /></a>
       <a className={`bag-button ${active === 'bag' ? 'active' : ''}`} href="#/bag" aria-label="Shopping bag">Bag <span className="bag-count">{bagCount}</span></a>
     </div>
@@ -49,7 +63,15 @@ function Header({ active, bagCount }) {
         {menuOpen ? <path d="M5 5l14 14M19 5 5 19" /> : <path d="M4 8h16M4 16h16" />}
       </svg>
     </button>
-  </header></>;
+  </header>
+  <div className="search-standalone">
+    <form className="search-field" role="search" onSubmit={submitSearch}>
+      <span className="search-flower" aria-hidden="true">✿</span><SearchIcon />
+      <input type="search" aria-label="Search products" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search pieces..." />
+      {search && <button className="search-clear" type="button" aria-label="Clear search" onClick={() => setSearch('')}>×</button>}
+      <button type="submit">Find <ArrowIcon /></button>
+    </form>
+  </div></>;
 }
 
 function Footer() {
@@ -191,19 +213,20 @@ function Home({ bagCount }) {
 
 function Shop({ bagCount, initialGarment }) {
   const products = useContext(CatalogContext);
+  const { search } = useContext(SearchContext);
   const [collectiveCategory, setCollectiveCategory] = useState(initialGarment);
   const [productCategory, setProductCategory] = useState('');
   useEffect(() => { setCollectiveCategory(initialGarment); }, [initialGarment]);
   const garments = getCategories(products, 'collective-category');
   const occasions = getCategories(products, 'product-category');
-  const visibleProducts = filterProducts(products, collectiveCategory, productCategory);
+  const visibleProducts = filterProducts(products, collectiveCategory, productCategory, search);
   return <Page active="shop" bagCount={bagCount}><main><section className="page-intro"><span className="eyebrow">The collection · കേരളം</span><h1>Everyday<br /><em>ceremony.</em></h1></section><section className="section shop-section">
     <div className="shop-filters">
       <label>Garment<select value={collectiveCategory} onChange={event => setCollectiveCategory(event.target.value)}><option value="">All garments</option>{garments.map(category => <option key={category} value={category}>{category}</option>)}</select></label>
       <label>Occasion<select value={productCategory} onChange={event => setProductCategory(event.target.value)}><option value="">All occasions</option>{occasions.map(category => <option key={category} value={category}>{category}</option>)}</select></label>
       <span className="eyebrow" aria-live="polite">{visibleProducts.length} {visibleProducts.length === 1 ? 'piece' : 'pieces'}</span>
     </div>
-    {visibleProducts.length ? <div className="product-grid">{visibleProducts.map(product => <ProductCard key={product.id} product={product} />)}</div> : <p className="shop-empty">No pieces match these filters. Try another combination.</p>}
+    {visibleProducts.length ? <div className="product-grid">{visibleProducts.map(product => <ProductCard key={product.id} product={product} />)}</div> : <p className="shop-empty">No pieces found just yet. Try another search or filter.</p>}
   </section></main></Page>;
 }
 
@@ -363,6 +386,7 @@ function App() {
   const [bagItems, setBagItems] = useState(initialBag.items);
   const [bagError, setBagError] = useState(initialBag.error);
   const [route, setRoute] = useState(window.location.hash);
+  const [search, setSearch] = useState(() => new URLSearchParams(window.location.hash.split('?', 2)[1]).get('search') || '');
   const [catalog, setCatalog] = useState(localProducts);
   const [catalogError, setCatalogError] = useState('');
   const bagCount = bagItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -372,6 +396,7 @@ function App() {
   }
 
   useEffect(() => { const updateRoute = () => setRoute(window.location.hash); window.addEventListener('hashchange', updateRoute); return () => window.removeEventListener('hashchange', updateRoute); }, []);
+  useEffect(() => { setSearch(new URLSearchParams(route.split('?', 2)[1]).get('search') || ''); }, [route]);
   useEffect(() => {
     if (!saveSessionBag(bagItems)) setBagError('Your bag could not be saved for this session.');
   }, [bagItems]);
@@ -393,7 +418,7 @@ function App() {
   const parts = path.split('/').filter(Boolean);
   const initialGarment = new URLSearchParams(query).get('garment') || '';
   const product = catalog.find(item => item.id === parts[1]) || catalog[0];
-  return <CatalogContext.Provider value={catalog}>
+  return <CatalogContext.Provider value={catalog}><SearchContext.Provider value={{ search, setSearch }}>
     {catalogError && <div className="catalog-error" role="alert">{catalogError}</div>}
     {bagError && <div className="catalog-error" role="alert">{bagError}</div>}
     {parts[0] === 'about' && <About bagCount={bagCount} />}
@@ -404,7 +429,7 @@ function App() {
     {parts[0] === 'product' && !parts[2] && <ProductDetail key={product.id} product={product} bagCount={bagCount} onAdd={size => addToBag(product, size)} />}
     {!parts[0] && <Home bagCount={bagCount} />}
     <LittleSree bagCount={bagCount} onAdd={addToBag} />
-  </CatalogContext.Provider>;
+  </SearchContext.Provider></CatalogContext.Provider>;
 }
 
 export default App;

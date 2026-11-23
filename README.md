@@ -4,6 +4,10 @@
 
 The hero plays a muted, looping KishabySree background video. It shows a still image instead when reduced motion is requested.
 
+## Product search
+
+Use the search bar below the navigation to find products by name, colour, fabric, origin, category, or description. Search updates results live in the shop and works together with garment and occasion filters.
+
 ## Shopping bag
 
 The bag groups items by product and selected length, where available. Use the quantity controls to add or remove individual pieces; decreasing the quantity to zero removes that entry. The bag survives refreshes using session storage and is cleared when the browser tab's session ends.
