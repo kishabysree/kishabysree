@@ -15,6 +15,13 @@ test('prompt includes the KishabySree Instagram handle', () => {
   assert.match(buildLittleSreePrompt([]), /@kishabysree\b/);
 });
 
+test('prompt limits free delivery to Kerala and leaves other charges unconfirmed', () => {
+  const prompt = buildLittleSreePrompt([]);
+  assert.match(prompt, /free delivery across Kerala on every order, with no minimum order value/);
+  assert.match(prompt, /Delivery charges outside Kerala are yet to be confirmed/);
+  assert.doesNotMatch(prompt, /free delivery across India/);
+});
+
 test('prompt provides the contact email without claiming to send email', () => {
   const prompt = buildLittleSreePrompt([]);
   assert.match(prompt, /kishabysree@gmail\.com/);

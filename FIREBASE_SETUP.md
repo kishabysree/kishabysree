@@ -19,10 +19,10 @@ npm install
 npm run seed:products
 ```
 
-The script imports `public/products.json` into Firestore as one document per product, using each product ID as the document ID. It stores `name`, `price`, `color`, `composition`, `origin`, `collective-category`, `product-category`, `images`, and `sortOrder`. The current `images` values are external Pexels/Unsplash URL references, so this step does not copy image files into Firebase Storage.
+The script imports `public/products.json` into Firestore as one document per product, using each product ID as the document ID. It stores `name`, `price`, `color`, `composition`, `origin`, `collective-category`, `product-category`, `images`, and `sortOrder`. The catalog's `images` values reference files already uploaded to Firebase Storage; the seed script does not upload image files.
 
 The homepage garment links and the shop's garment and occasion filters are derived from `collective-category` and `product-category`. Add both fields as strings to new product documents; newly added garment categories appear on the homepage after the catalog is reloaded. The example garments have `demo: true`, an optional `description`, and illustrative prices and photos; they can be added to the bag for testing. Replace demo content with verified product details before selling. Running the seed script replaces documents with matching product IDs, so it can overwrite edits made in Firestore.
 
-To use Firebase Storage later, upload image files you have permission to use, then replace each product's `images` array values with the corresponding Firebase Storage download URLs. The storefront already renders URL values from Firestore.
+To add product photos, upload images you have permission to use to the appropriate garment folder in Firebase Storage, then put their download URLs in the product's `images` array in Firestore. The first image is used on product cards. Update `public/products.json` as well if the local preview and future seed runs should use the same images. Download URLs allow anyone with the link to view the image.
 
 Run the app with `npm run dev`. Once the web config is set and the catalog is seeded, each app load fetches the catalog from Firestore. If the Firestore read fails, the site logs the error and shows the local preview catalog with an alert.

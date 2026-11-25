@@ -10,7 +10,7 @@ Use the search bar below the navigation to find products by name, colour, fabric
 
 ## Shopping bag
 
-The bag groups items by product and selected length, where available. Use the quantity controls to add or remove individual pieces; decreasing the quantity to zero removes that entry. The bag survives refreshes using session storage and is cleared when the browser tab's session ends.
+The bag groups items by product and selected length, where available. Use the quantity controls to add or remove individual pieces; decreasing the quantity to zero removes that entry. Delivery is free across Kerala on every order; charges elsewhere are yet to be confirmed. The bag survives refreshes using session storage and is cleared when the browser tab's session ends.
 
 ## Little Sree
 

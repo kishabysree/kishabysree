@@ -9,9 +9,9 @@
     "collective-category": "Saree",
     "product-category": "Traditional",
     "images": [
-      "https://drive.google.com/thumbnail?id=1oPHNamiUllocMEyA4BoVNFWAp1inDf6K&sz=w1200",
-      "https://images.pexels.com/photos/28752502/pexels-photo-28752502.jpeg?auto=compress&cs=tinysrgb&w=900",
-      "https://images.pexels.com/photos/36949450/pexels-photo-36949450.jpeg?auto=compress&cs=tinysrgb&w=900"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Fkasavu-saree-01.jpg?alt=media&token=d4a89197-9b3a-4480-949a-88f77f7ea428",
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Fkasavu-saree-02.jpg?alt=media&token=7275a465-cb71-414e-9ddc-f1b767f8f5f9",
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Fkasavu-saree-03.jpg?alt=media&token=f076696e-09c9-4fc3-9400-7a692bfd1202"
     ]
   },
   {
@@ -24,8 +24,8 @@
     "collective-category": "Saree",
     "product-category": "Traditional",
     "images": [
-      "https://drive.google.com/thumbnail?id=1h174ipr-vBqjOU-w_OGwRg0R1OIKwBrp&sz=w1200",
-      "https://images.pexels.com/photos/39322116/pexels-photo-39322116.jpeg?auto=compress&cs=tinysrgb&w=900"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Fwhite-set-saree-01.jpg?alt=media&token=28938b09-2169-41e2-99e3-0d89740f49c1",
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Fwhite-set-saree-02.jpg?alt=media&token=228c37ae-8409-4a6d-8598-b345d83ea79b"
     ]
   },
   {
@@ -38,8 +38,8 @@
     "collective-category": "Saree",
     "product-category": "Traditional",
     "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=88",
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=88"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Ftheyyam-silk-saree-01.jpg?alt=media&token=2c22f804-65fa-4f69-9f72-f2b4ac3ab02a",
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Saree%2Ftheyyam-silk-saree-02.jpg?alt=media&token=be3806d3-7e4e-468c-9841-7ad9b682d929"
     ]
   },
   {
@@ -54,7 +54,7 @@
     "description": "A tunic-inspired look for everyday wear. This is an illustrative demo, not an actual product listing.",
     "demo": true,
     "images": [
-      "https://images.pexels.com/photos/19556879/pexels-photo-19556879.jpeg?auto=compress&cs=tinysrgb&w=900"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Kurta-Kurti%2Fdemo-blue-kurti-01.jpg?alt=media&token=743739df-47b8-4fe7-9e6a-a3e0c2930c74"
     ]
   },
   {
@@ -69,7 +69,7 @@
     "description": "A classic shirt-inspired look for a considered work wardrobe. This is an illustrative demo, not an actual product listing.",
     "demo": true,
     "images": [
-      "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=900"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Shirt%2Fdemo-white-shirt-01.jpg?alt=media&token=baf9e154-5271-42fb-a489-608efc3d0aa7"
     ]
   },
   {
@@ -84,7 +84,7 @@
     "description": "A skirt-inspired occasion look with a bright accent. This is an illustrative demo, not an actual product listing.",
     "demo": true,
     "images": [
-      "https://images.pexels.com/photos/27954765/pexels-photo-27954765.jpeg?auto=compress&cs=tinysrgb&w=900"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Skirt%2Fdemo-orange-skirt-01.jpg?alt=media&token=a957d8ec-8bcd-4674-a55d-21081f0e01f5"
     ]
   },
   {
@@ -99,7 +99,7 @@
     "description": "An illustrative traditional outfit inspired by the pairing of a tunic and fitted trousers. This is a demo, not an actual product listing.",
     "demo": true,
     "images": [
-      "https://drive.google.com/thumbnail?id=15USktI8jxrAsDC4Gi58rAKk3rfeQGCb1&sz=w1200"
+      "https://firebasestorage.googleapis.com/v0/b/kishabysree-a8c88.firebasestorage.app/o/Churidar%2Fdemo-blue-churidar-01.jpg?alt=media&token=c88cf39c-18ad-4ed9-958a-555018f3aace"
     ]
   }
 ]
